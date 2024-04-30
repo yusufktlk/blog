@@ -25,7 +25,7 @@ import datetime
 class BlogListCreateAPIView(generics.ListCreateAPIView):
       queryset = Blog.objects.all().order_by('id')
       serializer_class = BlogSerializer
-      permission_classes = [IsAdminUserOrReadOnly]
+      permission_classes = [permissions.IsAuthenticated]
       pagination_class = SmallPagination
 
 class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):

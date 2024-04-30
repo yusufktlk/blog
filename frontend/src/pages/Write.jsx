@@ -27,9 +27,9 @@ function Write() {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",
-                // Authorization: `Token ${localStorage.getItem('token')}`
+                Authorization: `Token ${'785c2458f97ca8081d226e7fa1f667e177116d6f'}`
                 },
-            text: JSON.stringify(blog)
+            body: JSON.stringify(blog)
         })
         .then(response => {
             if (!response.ok) {

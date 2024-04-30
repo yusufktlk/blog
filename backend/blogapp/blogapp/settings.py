@@ -93,6 +93,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
+REST_AUTH = {
+    'OLD_PASSWORD_FIELD_ENABLED': True,
+}
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
