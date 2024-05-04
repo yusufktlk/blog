@@ -6,6 +6,13 @@ import { MdAccountCircle } from "react-icons/md";
 
 
 function Navbar() {
+    const handleLogout = () => {
+        // Yerel depolamadaki (local storage) kullanıcı bilgilerini temizle
+        localStorage.removeItem('user');
+        // Çıkış yapıldıktan sonra '/' sayfasına yönlendirme yapabilirsiniz veya başka bir işlem gerçekleştirebilirsiniz
+        window.location.href = '/'; // Örneğin, anasayfaya yönlendirme
+      };
+      
   return (
     <div className='flex text-white justify-between items-center mt-4 mx-24'>
 
@@ -41,6 +48,7 @@ function Navbar() {
             </Link>
             <Link to="profile">
                 <MdAccountCircle size={44} />
+                <button onClick={handleLogout}>Logout</button>
             </Link>
         </div>
 

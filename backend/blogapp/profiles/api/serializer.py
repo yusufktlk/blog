@@ -21,4 +21,4 @@ class ProfileStateSerializer(serializers.ModelSerializer):
 
      class Meta:
         model = ProfileState
-        fields = ['photo']
+        fields = '__all__'

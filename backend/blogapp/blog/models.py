@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from profiles.models import Profile
 
 class Category(models.Model):
     name = models.CharField(max_length = 50, null=True)
@@ -16,8 +17,10 @@ class Tag(models.Model):
         return self.name
 
 class Blog(models.Model):
-    blog_title = models.CharField(max_length = 50)
+    blog_title = models.CharField(max_length = 50, default="blog_title")
     blog_text = models.TextField(blank=True, null=True, verbose_name = "blog_text")
+    # blog_sahibi = models.OneToOneField(User, on_delete=models.CASCADE, related_name="blog_owner", default=1)
+    blog_sahibi = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="blog_owner",)
     category = models.ForeignKey(Category, null=True, on_delete=models.DO_NOTHING)
     tags = models.ManyToManyField(Tag, blank=True, null=True, default="programming")
     image = models.ImageField(upload_to='courses/%Y/%m/%d/', null=True)

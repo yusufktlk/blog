@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Login from './pages/Login'
 import Write from './pages/Write'
 import Profile from './pages/Profile'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/new-blog" element={<Write />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import BigBlogContainer from '../components/BigBlogContainer'
+import axios from 'axios';
 
 function Home() {
 
-  const [blogs, setBlogs] = useState()
+  const [blogs, setBlogs] = useState([]);
 
-     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/blogs/')
-        .then(response => response.json())
-        .then(json => setBlogs(json))
-  }, [])
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/blogs/', {
+          headers: {
+            "Content-Type": "application/json",
+             Authorization: `Token ${'785c2458f97ca8081d226e7fa1f667e177116d6f'}`
+        }
+        })
+        
+            .then(response => {
+              console.log(response.data.results)
+                setBlogs(response.data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching blogs:', error);
+            });
+    }, []);
 
 
   return (
@@ -17,11 +29,12 @@ function Home() {
         <BigBlogContainer />
 
       <h1 className='mx-24 mt-24 text-3xl tracking-wider font-thin font-sans'>ALL BLOGS</h1>
+      
       <div className='mt-12 mx-24 grid grid-cols-3 gap-y-24 items-center gap-x-12'>
-        {/* {blogs?.map((blog) => (
-          <div key={blog?.id} className='flex flex-col w-[380px] gap-y-2 tracking-wide h-[500px]'>
+        {blogs?.map((blog) => (
+          <div key={blog?.id} className='flex flex-col w-[380px] gap-y-2 tracking-wide min-h-[550px]'>
             <div>
-              <img src='logo1.jpg' className='w-full h-[250px]' />
+              <img src={blog.image} className='w-full h-[250px] ' />
             </div>
 
             <div className='text-[18px] ml-2 mt-2'>
@@ -32,12 +45,12 @@ function Home() {
                 <h1 className='mt-2'>{blog?.blog_title}</h1>
                 <p className='w-[370px] mt-1 drop-shadow-2xl text-gray-500'>{blog?.blog_text?.slice(0,150)}...</p>
             </div>
-            <div className='flex mt-8 gap-x-2 items-center m-auto'>
-                <img src='yusuf.jpg' className='w-12 h-12 rounded-full' />
+            <div className='flex mt-4 gap-x-2 items-center m-auto'>
+                <img src={blog.blog_sahibi.photo} className='w-12 h-12 rounded-full' />
                 <div className='flex justify-between gap-x-16 w-full'>
                     <div>
-                      <h1>Yusuf Kıtlık</h1>
-                      <h5 className='drop-shadow-2xl text-red-400'> Fullstack Developer</h5>
+                      <h1>{blog.blog_sahibi.firstname} {blog.blog_sahibi.lastname}</h1>
+                      <h5 className='drop-shadow-2xl text-red-400'> {blog.blog_sahibi.title}</h5>
                     </div>
 
                     <div>
@@ -46,8 +59,11 @@ function Home() {
                   </div>
             </div>
           </div>
-        ))} */}
-         <div  className='flex flex-col w-[380px] gap-y-2 tracking-wide h-[700px] rounded-xl'>
+        ))}
+        </div>
+
+
+         {/* <div  className='flex flex-col w-[380px] gap-y-2 tracking-wide h-[700px] rounded-xl'>
             <div>
               <img  src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png' className='w-full h-[250px] bg-cover' />
             </div>
@@ -195,9 +211,7 @@ React, Facebook tarafından geliştirilen ve açık kaynaklı olarak sunulan bir
                     </div>
                   </div>
             </div>
-          </div>
-      </div>
-
+          </div> */}
     </div>
   )
 }

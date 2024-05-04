@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-t%xyd8cyidi&#ys0#nv=3f1xn#k9yn*iplvby=-j)7*bw1k$w^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
+CORS_ORIGIN_ALLOW_ALL = True 
 
 # Application definition
 
@@ -87,6 +90,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'blogapp.wsgi.application'
+# WSGI_APPLICATION = 'wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -176,6 +180,11 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+    'http://127.0.0.1:3000'
+]
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [
@@ -208,3 +217,8 @@ AUTHENTICATION_BACKENDS = (
    "django.contrib.auth.backends.ModelBackend",
    "allauth.account.auth_backends.AuthenticationBackend"
 )
+
+APPEND_SLASH = False
+
+
+# AUTH_USER_MODEL = 'blogapp.CustomUser'
