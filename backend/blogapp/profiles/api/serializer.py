@@ -10,7 +10,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
-
 class ProfilePhotoSerializer(serializers.ModelSerializer):
      class Meta:
         model = Profile
