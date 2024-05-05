@@ -44,7 +44,7 @@ function Home() {
                   <h1 className='font-sans text-purple-300'>#{blog?.category}</h1>
                   <h1 className='text-green-300'>#{blog?.tags}</h1>
                 </div>
-                <h1 onClick={() => navigate(`blog/${blog?.id}`) & window.scroll(0,0)} className='mt-2 cursor-pointer hover:underline '>{blog?.blog_title}</h1>
+                <h1 onClick={() => navigate(`blog/${blog?.id}`) & window.scroll(0,0)} className='mt-2 cursor-pointer hover:underline '>{blog?.blog_title?.slice(0,40)}</h1>
                 <p className='w-[370px] mt-1 drop-shadow-2xl text-gray-500'>{blog?.blog_text?.slice(0,150)}...</p>
             </div>
             <div className='flex mt-4 gap-x-2 items-center m-auto'>

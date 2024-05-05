@@ -69,6 +69,7 @@ function Write() {
             setTitle("");
             setText("");
             setError(null);
+            window.location.href = "/";
         })
         .catch(error => {
             console.error('Error adding new blog:', error);
@@ -90,7 +91,6 @@ function Write() {
                     value={blog_title}
                     onChange={handleTitleChange}
                 />
-
                 <textarea 
                     name='blog_text'
                     placeholder=' Tell your story...' 

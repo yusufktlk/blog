@@ -6,11 +6,13 @@ import { MdAccountCircle } from "react-icons/md";
 
 
 function Navbar() {
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAuth = user && user.key;
+
     const handleLogout = () => {
-        // Yerel depolamadaki (local storage) kullanıcı bilgilerini temizle
         localStorage.removeItem('user');
-        // Çıkış yapıldıktan sonra '/' sayfasına yönlendirme yapabilirsiniz veya başka bir işlem gerçekleştirebilirsiniz
-        window.location.href = '/'; // Örneğin, anasayfaya yönlendirme
+        window.location.href = '/'; 
       };
       
   return (
@@ -32,26 +34,28 @@ function Navbar() {
         </div>
 
         </div>
-       
-       {/* <div className='inline-block'>
-            <div className='flex gap-x-2 items-center bg-white p-3 w-62 h-12 rounded-full'>
-                <FaSearch size={18} className='text-gray-800'/>
-                <input placeholder='Search' className='bg-inherit w-40 p-2 outline-none font-bold text-gray-800 placeholder:text-gray-800'/>
-            </div>
-        </div> */}
 
-
-        <div className='flex items-center gap-x-4'>
-            <Link to="/new-blog" className='flex items-center gap-x-2 border  p-2 rounded-lg'>
-                <CiShare1 size={20} />
-                <h1>Write</h1>
-            </Link>
-            <Link to="profile">
-                <MdAccountCircle size={44} />
-                <button onClick={handleLogout}>Logout</button>
-            </Link>
-        </div>
-
+            {isAuth ? (
+                <div className='flex items-center gap-x-4'>
+                    <Link to="/new-blog" className='flex items-center gap-x-2 border  p-2 rounded-lg'>
+                        <CiShare1 size={20} />
+                        <h1>Write</h1>
+                    </Link>
+                    <Link to="profile" className='flex gap-x-2 items-center'>
+                        <MdAccountCircle size={44} />
+                        <button onClick={handleLogout}>Logout</button>
+                    </Link>
+                </div>
+                ) : (
+                <div className='flex items-center gap-x-4'>
+                    <Link to="/login">
+                        <button className="text-white">Login</button>
+                    </Link>
+                    <Link to="/register">
+                        <button className="text-white">Register</button>
+                    </Link>
+                </div>
+            )}
 
     </div>
   )

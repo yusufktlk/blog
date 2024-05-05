@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 function Blog() {
     
-    const token = JSON.parse(localStorage.getItem('user')).key;
+    const token = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const isAuth = user && user.key;
     console.log(token)
 
     const [blog, setBlog] = useState([])
@@ -17,6 +20,28 @@ function Blog() {
     
     const [comment, setComment] = useState("")
     const [error, setError] = useState(null);
+
+    const isBlogAuthor = () => {
+        return token === JSON.parse(localStorage.getItem('user')).key;
+    }
+
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this blog?")) {
+            axios.delete(`http://127.0.0.1:8000/api/blogs/${id}`, {
+                headers: {
+                    "Authorization": `Token ${token}`
+                }
+            })
+            .then(response => {
+                console.log("Blog deleted:", response.data);
+                window.location.href = "/"
+            })
+            .catch(error => {
+                console.error('Error deleting blog:', error);
+                setError("You are not authorized to delete this blog.");
+            });
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -47,6 +72,13 @@ function Blog() {
     <div className='lg:mx-44 mb-24'>
         <img src={blog.image} className='m-auto w-full lg:w-[1100px] h-[300px] lg:h-[500px] mt-7 ' />
         <h1 className='text-3xl lg:text-5xl text-center mt-4'>{blog.blog_title}</h1>
+        {isAuth ? (
+            <button  onClick={() => handleDelete(blog.id)}>
+                <RiDeleteBin6Line size={32} className='absolute right-[220px] top-[635px] text-red-400' />
+            </button>
+        ) : (
+            <button></button>
+        )}
         <div className='flex gap-x-3 text-[14px] lg:text-base justify-center mt-4 mb-4'>
             <h3 className='text-purple-300'>#{blog.category}</h3>
             <h3 className='text-green-300'>#{blog.tags}</h3>
