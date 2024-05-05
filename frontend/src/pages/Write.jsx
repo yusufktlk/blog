@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+
 function Write() {
     const [blog_title, setTitle] = useState("");
     const [blog_text, setText] = useState("");
     const [tags, setTags] = useState("");
     const [category, setCategory] = useState("");
-    const [image, setImage] = useState(null);
+    // const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
+
+    const token = JSON.parse(localStorage.getItem('user')).key;
+    console.log(token)
 
     const [categories, setCategories] = useState([])
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/categories/')
         .then(response => {
             setCategories(response.data);
+            window.location.reload();
         })
         .catch(error => {
             console.error('Error fetching categories:', error);
@@ -46,25 +52,22 @@ function Write() {
             setError("Başlık, içerik, kategori ve etiket alanları boş bırakılamaz.");
             return;
         }
-    
-        // Kategoriyi doğru şekilde almak için categories array'ini kullanıyoruz
+  
         const selectedCategory = categories.find(cat => cat.id === parseInt(category));
     
-        const blog = { blog_title, blog_text, image };
+        const blog = { blog_title, blog_text };
         console.log(blog);
     
         axios.post('http://127.0.0.1:8000/api/blogs/', blog, {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Token 785c2458f97ca8081d226e7fa1f667e177116d6f`
+                "Authorization": `Token ${token}`
             }
         })
         .then(response => {
             console.log("new blog added:", response.data);
             setTitle("");
             setText("");
-            
-            setImage(null);
             setError(null);
         })
         .catch(error => {
@@ -87,6 +90,7 @@ function Write() {
                     value={blog_title}
                     onChange={handleTitleChange}
                 />
+
                 <textarea 
                     name='blog_text'
                     placeholder=' Tell your story...' 
@@ -115,12 +119,13 @@ function Write() {
                         <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
                     ))}
                 </select> */}
-                <input
+                {/* <input
                     type="file"
                     name="image"
+                    accept="image/png, image/jpeg, image/jpg"
                     className="w-[300px] p-3 rounded-xl bg-black border border-red-400"
                     onChange={handleImageChange}
-                />
+                /> */}
                 {error && <p className="text-red-500">{error}</p>}
                 <button type='submit' className='w-[200px] bg-red-400 text-black rounded-lg p-3 mt-4'>Submit</button>
             </form>

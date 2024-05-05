@@ -1,26 +1,26 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 function Profile() {
   const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState();
 
   useEffect(() => {
-    // Yerel depolamadan kullanıcı bilgilerini al
     const userData = JSON.parse(localStorage.getItem('user'));
-    // Kullanıcı bilgilerini state'e kaydet
     setUser(userData);
   }, []);
 
+  console.log(user)
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/blogs/`)
+    .then(res => setProfile(res.data))
+}, [])
+
+  
   return (
     <div>
-      {user ? (
-        <div>
-          <p>Welcome, {user.username}!</p>
-          <p>Email: {user.email}</p>
-          {/* Diğer kullanıcı bilgilerini burada gösterebilirsiniz */}
-        </div>
-      ) : (
-        <p>User not logged in.</p>
-      )}
+      key: {user?.key}
     </div>
   );
 }

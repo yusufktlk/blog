@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BigBlogContainer from '../components/BigBlogContainer'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
@@ -23,6 +24,7 @@ function Home() {
             });
     }, []);
 
+    const navigate = useNavigate()
 
   return (
     <div className='mb-24'd>
@@ -39,10 +41,10 @@ function Home() {
 
             <div className='text-[18px] ml-2 mt-2'>
                <div className='flex text-[13px] gap-x-4'>
-                  <h1 className='font-sans font- text-purple-300'>#{blog?.category}</h1>
+                  <h1 className='font-sans text-purple-300'>#{blog?.category}</h1>
                   <h1 className='text-green-300'>#{blog?.tags}</h1>
                 </div>
-                <h1 className='mt-2'>{blog?.blog_title}</h1>
+                <h1 onClick={() => navigate(`blog/${blog?.id}`) & window.scroll(0,0)} className='mt-2 cursor-pointer hover:underline '>{blog?.blog_title}</h1>
                 <p className='w-[370px] mt-1 drop-shadow-2xl text-gray-500'>{blog?.blog_text?.slice(0,150)}...</p>
             </div>
             <div className='flex mt-4 gap-x-2 items-center m-auto'>

@@ -14,9 +14,7 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register(r'profiles', ProfileViewSet)
-router.register(r'states', ProfileStateViewSet, basename='state')
-
+router.register(r'profiles', ProfileViewSet) 
 
 urlpatterns = [
     path('', include(router.urls)),

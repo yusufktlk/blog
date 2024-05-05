@@ -10,7 +10,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from rest_framework import permissions
-from blog.api.permissions import IsAdminUserOrReadOnly, IsYorumSahibiOrReadOnly
+from blog.api.permissions import IsAdminUserOrReadOnly, IsYorumSahibiOrReadOnly, IsOwnerOrAdmin
 from blog.api.pagination import SinglePagination, SmallPagination, MediumPagination
 from blog.models import Blog, Category, Tag, Yorum
 from blog.api.serializers import BlogSerializer, YorumSerializer, CategorySerializer
@@ -34,7 +34,7 @@ from profiles.api.permissions import UpdateYourselfOrReadOnly, UpdateStateYourse
 class BlogListCreateAPIView(generics.ListCreateAPIView):
       queryset = Blog.objects.all().order_by('id')
       serializer_class = BlogSerializer
-      permission_classes = [permissions.IsAuthenticated]
+      permission_classes = [permissions.IsAuthenticatedOrReadOnly]
       pagination_class = MediumPagination
 
       def get_or_create_profile(self, user):
@@ -52,8 +52,8 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
             blog_text=data["blog_text"],
             # category=data["category"],
             # tags=data["tags"],
-            image=data["image"],
-            blog_sahibi=user_profile  # Profil örneğini kullanarak blog sahibini atayın
+            # image=data["image"],
+            blog_sahibi=user_profile 
         )
         newBlog.save()
         return Response(status=status.HTTP_201_CREATED)
@@ -63,12 +63,13 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
 class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
       queryset = Blog.objects.all()
       serializer_class = BlogSerializer
+      permission_classes = [permissions.IsAuthenticatedOrReadOnly ,IsOwnerOrAdmin]
 
 
 class YorumCreateAPIView(generics.CreateAPIView):
       queryset = Yorum.objects.all()
       serializer_class = YorumSerializer
-      permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+      permission_classes = [IsOwnerOrAdmin]
       
       def perform_create(self, serializer):
         blog_pk = self.kwargs.get('blog_pk')

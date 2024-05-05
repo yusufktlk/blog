@@ -6,7 +6,7 @@ function Login() {
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Formun varsayılan davranışını engelle
+    e.preventDefault(); 
     try {
       const response = await fetch('http://127.0.0.1:8000/dj-rest-auth/login/', {
         method: 'POST',
@@ -19,17 +19,20 @@ function Login() {
       if (!response.ok) {
         throw new Error('Invalid credentials');
       }
+    
+      const userData = await response.json(); 
+      console.log(response)
+      console.log(userData)
+
+      localStorage.setItem('user', JSON.stringify(userData));
       
-      // Giriş başarılı, oturumu başlat
-      // Kullanıcı bilgilerini yerel depolamaya (local storage) kaydet
-      localStorage.setItem('user', JSON.stringify({ email }));
-      
-      // Başarıyla giriş yaptıktan sonra '/' sayfasına yönlendirme
+
       window.location.href = '/';
     } catch (error) {
       setError(error.message);
     }
   };
+  
 
   return (
     <div className='relative flex flex-col justify-center mt-24 lg:mt-8 mb-24 m-auto w-[650px] h-screen lg:h-[550px]'>
