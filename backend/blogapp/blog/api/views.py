@@ -12,7 +12,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from blog.api.permissions import IsAdminUserOrReadOnly, IsYorumSahibiOrReadOnly, IsOwnerOrAdmin
 from blog.api.pagination import SinglePagination, SmallPagination, MediumPagination
-from blog.models import Blog, Category, Tag, Yorum
+from blog.models import Blog, Category, Tag, Yorum, Tag
 from blog.api.serializers import BlogSerializer, YorumSerializer, CategorySerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -38,7 +38,6 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
       pagination_class = MediumPagination
 
       def get_or_create_profile(self, user):
-        # Kullanıcının profilini alın, yoksa oluşturun
         profile, created = Profile.objects.get_or_create(user=user)
         return profile
       
@@ -49,16 +48,23 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
         user_profile = self.get_or_create_profile(user)
         
         image = request.FILES.get('image')
+        category = data.get('category')
+        category_instance = Category.objects.get(name=category)
+
+        tags = data.getlist('tags')
+        tags_instance = Tag.objects.filter(name__in=tags)
+
     
         newBlog = Blog(
             blog_title=data["blog_title"],
             blog_text=data["blog_text"],
-            # category=data["category"],
-            # tags=data["tags"],
+            category=category_instance,
+            # tags=tags_instance,
             image=image,
             blog_sahibi=user_profile 
         )
         newBlog.save()
+        newBlog.tags.set(tags_instance)
         return Response(status=status.HTTP_201_CREATED)
 
       

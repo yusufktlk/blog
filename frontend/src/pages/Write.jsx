@@ -81,6 +81,8 @@ function Write() {
         formData.append('blog_title', blog_title);
         formData.append('blog_text', blog_text);
         formData.append('image', image);
+        formData.append('tags', tags);
+        formData.append('category', category)
       
         try {
           const response = await axios.post('http://127.0.0.1:8000/api/blogs/', formData, {
@@ -117,15 +119,15 @@ function Write() {
                     value={blog_text}
                     onChange={handleTextChange}
                 />
-                {/* <select
+                <select
                     name='tags'
                     className='w-[600px] p-3 rounded-xl bg-black border border-red-400'
                     value={tags}
                     onChange={handleTagsChange}
                 >
-                    <option value="">Select a Tag</option>
-                    <option value="Category 1">Travelling</option>
-                    <option value="Category 2">Blockchain</option>
+                    <option >Select a Tag</option>
+                    <option >Travelling</option>
+                    <option >Blockchain</option>
                 </select>
                 <select
                     name='category'
@@ -133,11 +135,10 @@ function Write() {
                     value={category}
                     onChange={handleCategoryChange}
                 >
-                   <option value="">Select a Category</option>
-                   {categories.map(categorie => (
-                        <option key={categorie.id} value={categorie.id}>{categorie.name}</option>
-                    ))}
-                </select> */}
+                    <option>Select a Category</option>
+                    <option >Programming</option>
+                    <option>Travel</option>
+                </select>
                 <input
                     type="file"
                     name="image"

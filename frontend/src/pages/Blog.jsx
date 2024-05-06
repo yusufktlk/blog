@@ -74,7 +74,7 @@ function Blog() {
         <h1 className='text-3xl lg:text-5xl text-center mt-4'>{blog.blog_title}</h1>
         {isAuth ? (
             <button  onClick={() => handleDelete(blog.id)}>
-                <RiDeleteBin6Line size={32} className='absolute right-[220px] top-[635px] text-red-400' />
+                <RiDeleteBin6Line size={32} className='absolute right-[220px] top-[635px] text-red-400 mt-7' />
             </button>
         ) : (
             <button></button>
