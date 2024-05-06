@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from blog.models import Blog, Category, Tag, Yorum, Profile
 
-
+class TagSerializer(serializers.ModelField):
+    class Meta:
+        model = Tag
+        fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

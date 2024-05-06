@@ -44,6 +44,15 @@ class ProfilePhotoUpdateView(generics.UpdateAPIView):
         profil_instance = self.request.user.profile
         return profil_instance
     
+from rest_framework.views import APIView
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_profile = request.user.profile 
+        serializer = ProfileSerializer(user_profile)
+        return Response(serializer.data)
+    
 
 from rest_framework.views import APIView
 from rest_framework.response import Response

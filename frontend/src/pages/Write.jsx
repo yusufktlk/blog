@@ -16,15 +16,29 @@ function Write() {
 
     const [categories, setCategories] = useState([])
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/categories/')
+        axios.get('http://127.0.0.1:8000/api/categories/1')
         .then(response => {
             setCategories(response.data);
-            window.location.reload();
         })
         .catch(error => {
             console.error('Error fetching categories:', error);
         });
     }, []);
+
+    console.log(categories)
+
+    const [tagList, setTagList] = useState([])
+    useEffect(() => {
+      axios.get('http://127.0.0.1:8000/api/tags/')
+      .then(response => {
+        setTagList(response.data)
+      })
+      .catch(error => {
+        console.log('Error fetching tags:', error)
+      })
+    }, [])
+    console.log(tagList)
+    
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -126,8 +140,13 @@ function Write() {
                     onChange={handleTagsChange}
                 >
                     <option >Select a Tag</option>
-                    <option >Travelling</option>
-                    <option >Blockchain</option>
+                    {tagList?.map((tag) => {
+                        return(
+                            <option>
+                                {tag.name}
+                            </option>
+                        )
+                    })}
                 </select>
                 <select
                     name='category'
@@ -136,8 +155,13 @@ function Write() {
                     onChange={handleCategoryChange}
                 >
                     <option>Select a Category</option>
-                    <option >Programming</option>
-                    <option>Travel</option>
+                    {categories?.map((category) => {
+                        return(
+                            <option key={category?.id} value={category?.name}>
+                                {category?.name}
+                            </option>
+                        )
+                    })}
                 </select>
                 <input
                     type="file"
@@ -145,7 +169,7 @@ function Write() {
                     accept="image/png, image/jpeg, image/jpg"
                     className="w-[300px] p-3 rounded-xl bg-black border border-red-400"
                     onChange={handleImageChange}
-                />
+                    />
                 {error && <p className="text-red-500">{error}</p>}
                 <button type='submit' className='w-[200px] bg-red-400 text-black rounded-lg p-3 mt-4'>Submit</button>
             </form>

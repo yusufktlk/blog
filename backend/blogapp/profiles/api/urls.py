@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from profiles.api import views
-from profiles.api.views import ProfileViewSet, ProfileStateViewSet, ProfilePhotoUpdateView
+from profiles.api.views import ProfileViewSet, ProfileStateViewSet, ProfilePhotoUpdateView, UserProfileView
 from rest_framework.routers import DefaultRouter
 
 # profiles = ProfileViewSet.as_view({'get': 'list'})
@@ -16,8 +16,10 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'profiles', ProfileViewSet) 
 
+
 urlpatterns = [
     path('', include(router.urls)),
     path('photos', ProfilePhotoUpdateView.as_view(), name='photos' ),
+    path('user/profile/', UserProfileView.as_view(), name='user_profile' ),
 ]
 

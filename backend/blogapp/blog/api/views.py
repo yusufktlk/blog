@@ -13,7 +13,7 @@ from rest_framework import permissions
 from blog.api.permissions import IsAdminUserOrReadOnly, IsYorumSahibiOrReadOnly, IsOwnerOrAdmin
 from blog.api.pagination import SinglePagination, SmallPagination, MediumPagination
 from blog.models import Blog, Category, Tag, Yorum, Tag
-from blog.api.serializers import BlogSerializer, YorumSerializer, CategorySerializer
+from blog.api.serializers import BlogSerializer, YorumSerializer, CategorySerializer, TagSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -95,4 +95,9 @@ class YorumDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class CategoriesAPIView(generics.ListCreateAPIView):
      queryset = Category.objects.all()
      serializer_class = CategorySerializer
+     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class TagsAPIView(generics.ListCreateAPIView):
+     queryset = Tag.objects.all()
+     serializer_class = TagSerializer
      permission_classes = [permissions.IsAuthenticatedOrReadOnly]
