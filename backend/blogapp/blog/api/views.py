@@ -46,13 +46,16 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
         data = request.data
         user = request.user
         print(data)
-        user_profile = self.get_or_create_profile(user)  # Kullanıcının profili
+        user_profile = self.get_or_create_profile(user)
+        
+        image = request.FILES.get('image')
+    
         newBlog = Blog(
             blog_title=data["blog_title"],
             blog_text=data["blog_text"],
             # category=data["category"],
             # tags=data["tags"],
-            # image=data["image"],
+            image=image,
             blog_sahibi=user_profile 
         )
         newBlog.save()

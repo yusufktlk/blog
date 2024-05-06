@@ -5,7 +5,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 function Blog() {
     
-    const token = JSON.parse(localStorage.getItem('user') || '{}');
+    const token = JSON.parse(localStorage.getItem('user')).key;
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const isAuth = user && user.key;
     console.log(token)
