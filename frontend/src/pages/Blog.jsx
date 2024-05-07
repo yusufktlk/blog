@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { GiCancel } from "react-icons/gi";
+import { MdCancel } from "react-icons/md";
+
 
 function Blog() {
     
@@ -66,6 +69,22 @@ function Blog() {
             setError("Yorumunuz eklenirken bir hata oluştu.");
         });
     }
+
+    const deleteComment = (id) => {
+        axios.delete(`http://127.0.0.1:8000/api/yorumlar/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${token}`
+            }
+        })
+        .then(response => {
+            console.log("Comment deleted.", response.data)
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log("Error deleting comment!", error)
+        })
+    }
     
     
   return (
@@ -122,10 +141,15 @@ function Blog() {
             <div className='flex flex-col gap-y-12 mt-16'>
                 {blog?.yorumlar?.slice(0).reverse().map((comment) => {
                     return(
-                        <div className='flex flex-col justify-between mx-10 lg:mx-32 p-3 border-b border-gray-600 rounded-x'>
-                            <div className='flex flex-row justify-between'>
+                        <div className='flex flex-col justify-between mx-10 border rounded-xl lg:mx-32 p-3 border-b border-gray-600 rounded-x'>
+                            <div className='flex flex-row justify-between items-cente '>
                                 <h1 className='text-gray-500'>@{comment.yorum_sahibi}</h1>
-                                <h5 className='text-gray-500 text-[14px] underline '>{blog?.date.slice(0,10)}</h5>
+                                <div className='flex flex-col gap-y-2'>
+                                    <button onClick={() => deleteComment(comment.id)}>
+                                        <MdCancel size={24} className='text-red-400 ml-14' />
+                                    </button>
+                                    <h5 className='text-gray-500 text-[14px] underline '>{blog?.date.slice(0,10)}</h5>
+                                </div>
                             </div>
                                 <h1 className='text-[22px] break-words w-full'>{comment.yorum}</h1>
                         </div>

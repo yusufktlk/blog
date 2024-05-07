@@ -59,7 +59,6 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
             blog_title=data["blog_title"],
             blog_text=data["blog_text"],
             category=category_instance,
-            # tags=tags_instance,
             image=image,
             blog_sahibi=user_profile 
         )

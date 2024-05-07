@@ -10,8 +10,8 @@ function Footer() {
       <div class="flex justify-between mx-10 items-center">
         <div className='flex gap-x-2 items-center'>
           <div className='flex items-center mr-4'>
-            <img src='logo.png' className='w-14' />
-            <h1 className='text-lg'>| Yusuf Kıtlık</h1>
+            <img src='yulogy_black.svg' className='w-20 h-16 bg-white rounded-lg' />
+            <h1 className='ml-3 text-lg'>| Yusuf Kıtlık</h1>
           </div>
           <p>@ 2024 Yusuf Kıtlık —</p>
           <h3 className='text-gray-500'>@yusufktlk</h3>

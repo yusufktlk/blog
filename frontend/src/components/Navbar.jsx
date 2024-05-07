@@ -20,10 +20,9 @@ function Navbar() {
 
         <div className='flex gap-x-4 items-center'>
            <Link to="/" className='flex items-center'>
-                <img src='logo.png' className='w-24' />
-                <h1 className='text-3xl'>YuLog</h1> 
+                <img src='yulogy_black.svg' className='bg-white w-28 h-28 rounded-full hover:scale-105 duration-500' />
            </Link>
-                <hr className='border-r-2 border-gray-600 h-10 rounded-xl opacity-90' />
+                <hr className='border-r-2 border-gray-600 h-20 rounded-xl opacity-90' />
         <div className='flex gap-x-6 text-[17px] items-center'>
             <Link to="/programming">Programming</Link>
             <Link to="game">Game</Link>
