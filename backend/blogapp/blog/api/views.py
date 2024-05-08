@@ -67,12 +67,10 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
       
-
 class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
       queryset = Blog.objects.all()
       serializer_class = BlogSerializer
       permission_classes = [permissions.IsAuthenticatedOrReadOnly ,IsOwnerOrAdmin]
-
 
 class YorumCreateAPIView(generics.CreateAPIView):
       queryset = Yorum.objects.all()
@@ -95,6 +93,7 @@ class CategoriesAPIView(generics.ListCreateAPIView):
      queryset = Category.objects.all()
      serializer_class = CategorySerializer
      permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
 
 class TagsAPIView(generics.ListCreateAPIView):
      queryset = Tag.objects.all()

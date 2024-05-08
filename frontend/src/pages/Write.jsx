@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-
 function Write() {
     const [blog_title, setTitle] = useState("");
     const [blog_text, setText] = useState("");
@@ -61,35 +59,7 @@ function Write() {
     }
 
     const handleSubmit = async (event) => {
-        // event.preventDefault();
-        // if (!blog_title || !blog_text ) {
-        //     setError("Başlık, içerik, kategori ve etiket alanları boş bırakılamaz.");
-        //     return;
-        // }
-  
-        // const selectedCategory = categories.find(cat => cat.id === parseInt(category));
-    
-        // const blog = { blog_title, blog_text, image };
-        // console.log(blog);
-    
-        // axios.post('http://127.0.0.1:8000/api/blogs/', blog, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Token ${token}`
-        //     }
-        // })
-        // .then(response => {
-        //     console.log("new blog added:", response.data);
-        //     setTitle("");
-        //     setText("");
-        //     setError(null);
-        //     window.location.href = "/";
-        // })
-        // .catch(error => {
-        //     console.error('Error adding new blog:', error);
-        //     setError("Blog eklenirken bir hata oluştu.");
-        // });
-
+      
         event.preventDefault();
         const formData = new FormData();
         formData.append('blog_title', blog_title);
@@ -111,35 +81,32 @@ function Write() {
           console.error('Error:', error);
         }
     }
-    
-    
-    
-    
+
     return (
-        <div className='h-screen'>
+        <div className='lg:h-screen mb-12'>
             <form onSubmit={handleSubmit} method="post" enctype="multipart/form-data"  className='flex flex-col gap-y-4 mt-8 justify-center items-center '>
                 <input 
                     type='text'
                     name='blog_title'
                     placeholder='Blog Title' 
-                    className='w-[600px] p-3 rounded-xl bg-black border border-red-400'
+                    className='w-[350px] lg:w-[600px] p-3 rounded-xl bg-black border border-red-400'
                     value={blog_title}
                     onChange={handleTitleChange}
                 />
                 <textarea 
                     name='blog_text'
                     placeholder=' Tell your story...' 
-                    className='w-[600px] h-[400px] p-2 rounded-xl bg-black border border-red-400'
+                    className='w-[350px] lg:w-[600px] h-[400px] p-2 rounded-xl bg-black border border-red-400'
                     value={blog_text}
                     onChange={handleTextChange}
                 />
                 <select
                     name='tags'
-                    className='w-[600px] p-3 rounded-xl bg-black border border-red-400'
+                    className='w-[350px] lg:w-[600px] p-3 rounded-xl bg-black border border-red-400'
                     value={tags}
                     onChange={handleTagsChange}
                 >
-                    <option >Select a Tag</option>
+                    <option className='p-3 '>Select a Tag</option>
                     {tagList?.map((tag) => {
                         return(
                             <option>
@@ -150,14 +117,14 @@ function Write() {
                 </select>
                 <select
                     name='category'
-                    className='w-[600px] p-3 rounded-xl bg-black border border-red-400'
+                    className='w-[350px] lg:w-[600px] p-3 rounded-xl bg-black border border-red-400'
                     value={category}
                     onChange={handleCategoryChange}
                 >
                     <option>Select a Category</option>
                     {categories?.map((category) => {
                         return(
-                            <option key={category?.id} value={category?.name}>
+                            <option className='p-3 ' key={category?.id} value={category?.name}>
                                 {category?.name}
                             </option>
                         )
@@ -171,7 +138,7 @@ function Write() {
                     onChange={handleImageChange}
                     />
                 {error && <p className="text-red-500">{error}</p>}
-                <button type='submit' className='w-[200px] bg-red-400 text-black rounded-lg p-3 mt-4'>Submit</button>
+                <button type='submit' className='w-[200px] bg-red-400 text-black rounded-lg p-3 mt-2 lg:mt-4'>Submit</button>
             </form>
         </div>
     )

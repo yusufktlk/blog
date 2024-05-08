@@ -9,7 +9,7 @@ function Register() {
   const [error, setError] = useState('');
 
   const handleRegister = async (e) => {
-    e.preventDefault(); // Formun varsayılan davranışını engelle
+    e.preventDefault(); 
     try {
       if (password1 !== password2) {
         throw new Error("Passwords don't match");
@@ -30,16 +30,15 @@ function Register() {
         setPassword2('');
         setError(null);
 
-        // Başarılı kayıt sonucunu işleme veya kullanıcıyı giriş sayfasına yönlendirme gibi işlemler yapılabilir
         window.location.href = '/login';
       })
       .catch(error => {
-        console.error('Registration failed:', error.response.data); // Hata durumunda konsola hata mesajını yazdır
-        setError(error.response.data.error); // Hata mesajını state'e kaydet
+        console.error('Registration failed:', error.response.data); 
+        setError(error.response.data.error); 
       });
     } catch (error) {
-      console.error('Registration failed:', error.response.data); // Hata durumunda konsola hata mesajını yazdır
-      setError(error.response.data.error); // Hata mesajını state'e kaydet
+      console.error('Registration failed:', error.response.data); 
+      setError(error.response.data.error); 
     }
   };
 
@@ -78,7 +77,7 @@ function Register() {
         />
         {error && <p className="text-red-500">{error}</p>}
         <button
-          type='submit' // Buton tipini submit olarak ayarla
+          type='submit' 
           className='p-4 rounded-3xl bg-white text-black font-bold w-[310px]'
         >
           Register

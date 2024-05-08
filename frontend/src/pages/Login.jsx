@@ -56,7 +56,7 @@ function Login() {
         />
         {error && <p className="text-red-500">{error}</p>}
         <button
-          type='submit' // Buton tipini submit olarak ayarla
+          type='submit' 
           className='p-4 rounded-3xl bg-white text-black font-bold w-[310px]'
         >
           Sign in

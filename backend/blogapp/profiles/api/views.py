@@ -18,9 +18,7 @@ class ProfileViewSet(
     permission_classes = [IsAuthenticated, UpdateYourselfOrReadOnly]
 
 
-
 class ProfileStateViewSet(ModelViewSet):
-    
     serializer_class = ProfileStateSerializer
     permission_classes = [IsAuthenticated, UpdateStateYourselfOrReadOnly]
 
@@ -75,9 +73,9 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=400)
 
+
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -89,7 +87,6 @@ class RegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        # POST isteğiyle gelen verileri al
         username = request.data.get('username')
         email = request.data.get('email')
         password1 = request.data.get('password1')
@@ -98,21 +95,15 @@ class RegisterView(APIView):
         print(request.data)
         print(self)
 
-        # Kullanıcı adı veya e-posta adresi zaten kullanımda mı diye kontrol et
         if User.objects.filter(username__iexact=username).exists():
             return JsonResponse({'error': 'Username already exists'}, status=400)
         if User.objects.filter(email__iexact=email).exists():
             return JsonResponse({'error': 'Email already exists'}, status=400)
-
-        # İki şifrenin de eşleşip eşleşmediğini kontrol et
         if password1.lower() != password2.lower():
             return JsonResponse({'error': "Passwords don't match"}, status=400)
 
-        # Kullanıcı oluştur
         user = User.objects.create_user(username=username, email=email, password=password1)
-        
-        # Oluşturulan kullanıcıya oturum anahtarı (token) oluştur
+ 
         token, _ = Token.objects.get_or_create(user=user)
-        
-        # Başarılı yanıtı döndür
+
         return Response({'token': token.key})

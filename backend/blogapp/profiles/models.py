@@ -9,6 +9,7 @@ class Profile(models.Model):
     firstname = models.CharField(max_length=150, null=True, blank=True)
     lastname = models.CharField(max_length=150, null=True, blank=True)
     title = models.CharField(max_length=150, null=True, blank=True)
+    bio = models.CharField(max_length=250, null=True, blank=True)
     photo = models.ImageField(null=True, blank=True, upload_to="profile_photos/%Y/%m")
 
     def __str__(self):

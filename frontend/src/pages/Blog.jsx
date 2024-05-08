@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { GiCancel } from "react-icons/gi";
 import { MdCancel } from "react-icons/md";
 
 
@@ -45,6 +44,7 @@ function Blog() {
             });
         }
     }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -89,23 +89,23 @@ function Blog() {
     
   return (
     <div className='lg:mx-44 mb-24'>
-        <img src={blog.image} className='m-auto w-full lg:w-[1100px] h-[300px] lg:h-[500px] mt-7 ' />
+        <img src={blog.image} className='m-auto w-full lg:w-[1100px] h-[250px] lg:h-[500px] mt-7 ' />
         <h1 className='text-3xl lg:text-5xl text-center mt-4'>{blog.blog_title}</h1>
         {isAuth ? (
             <button  onClick={() => handleDelete(blog.id)}>
-                <RiDeleteBin6Line size={32} className='absolute right-[220px] top-[635px] text-red-400 mt-7' />
+                <RiDeleteBin6Line size={32} className='absolute right-0 top-[365px] lg:right-[220px] lg:top-[635px] text-red-400 mt-7' />
             </button>
         ) : (
             <button></button>
         )}
-        <div className='flex gap-x-3 text-[14px] lg:text-base justify-center mt-4 mb-4'>
+        <div className='flex gap-x-3 text-[14px] lg:text-base justify-center lg:mt-4 mb-4'>
             <h3 className='text-purple-300'>#{blog.category}</h3>
             <h3 className='text-green-300'>#{blog.tags}</h3>
         </div>
         <p className='tracking-widest text-gray-600 text-[18px] mx-10 lg:mx-24'>
             {blog.blog_text}
         </p>
-        <div className='flex items-center gap-x-2 justify-center lg:justify-end lg:mr-24 mt-8'>
+        <div className='flex items-center gap-x-2 justify-center lg:justify-end mr-24 mt-8'>
             <img src={blog?.blog_sahibi?.photo} className='w-16 h-16 rounded-full' />
             <div>
                 <h1 className='text-lg lg:text-xl'>{blog?.blog_sahibi?.firstname} {blog?.blog_sahibi?.lastname}</h1>
